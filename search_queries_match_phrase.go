@@ -10,13 +10,12 @@ package elastic
 // For more details, see
 // https://www.elastic.co/guide/en/elasticsearch/reference/7.0/query-dsl-match-query-phrase.html
 type MatchPhraseQuery struct {
-	name           string
-	value          interface{}
-	analyzer       string
-	slop           *int
-	boost          *float64
-	queryName      string
-	zeroTermsQuery string
+	name      string
+	value     interface{}
+	analyzer  string
+	slop      *int
+	boost     *float64
+	queryName string
 }
 
 // NewMatchPhraseQuery creates and initializes a new MatchPhraseQuery.
@@ -34,12 +33,6 @@ func (q *MatchPhraseQuery) Analyzer(analyzer string) *MatchPhraseQuery {
 // Slop sets the phrase slop if evaluated to a phrase query type.
 func (q *MatchPhraseQuery) Slop(slop int) *MatchPhraseQuery {
 	q.slop = &slop
-	return q
-}
-
-// ZeroTermsQuery can be "all" or "none".
-func (q *MatchPhraseQuery) ZeroTermsQuery(zeroTermsQuery string) *MatchPhraseQuery {
-	q.zeroTermsQuery = zeroTermsQuery
 	return q
 }
 
@@ -74,9 +67,6 @@ func (q *MatchPhraseQuery) Source() (interface{}, error) {
 	}
 	if q.slop != nil {
 		query["slop"] = *q.slop
-	}
-	if q.zeroTermsQuery != "" {
-		query["zero_terms_query"] = q.zeroTermsQuery
 	}
 	if q.boost != nil {
 		query["boost"] = *q.boost
